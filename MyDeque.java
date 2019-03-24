@@ -40,6 +40,7 @@ public class MyDeque<E>{
   //Stack method?
   public void addFirst(E element) throws NullPointerException {
     data[0] = element;
+    size += 1;
     for (int i = 1; i < data.length-1; i++){
       data[i + 1] = data[i];
     }
@@ -48,15 +49,20 @@ public class MyDeque<E>{
   public void addLast(E element) throws NullPointerException { }
   // public E removeFirst(){ }
   // public E removeLast(){ }
-  // public E getFirst(){ }
-  // public E getLast(){ }
+
+  public E getFirst(){
+    return data[start];
+  }
+
+  public E getLast(){
+    return data[end];
+  }
 
   public static void main(String[] args) {
     MyDeque test;
     test = new MyDeque(10);
     test.addFirst(1);
-    test.addFirst(2);
-
+    System.out.println(test.getFirst());
     System.out.println(test.size());
     System.out.println(test.toString());
   }
