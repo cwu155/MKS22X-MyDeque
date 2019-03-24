@@ -11,13 +11,14 @@ public class MyDeque<E>{
   @SuppressWarnings("unchecked")
   public MyDeque(){
     data = (E[])new Object[size];
+    size = 0; start = 0; end = 0;
   }
 
   //Constructor numero dos con size?
   @SuppressWarnings("unchecked")
   public MyDeque(int initialCapacity){
-    size = initialCapacity;
-    data = (E[])new Object[size];
+    data = (E[])new Object[initialCapacity];
+    size = 0; start = 0; end = 0;
   }
 
   //Returns size!
@@ -25,6 +26,7 @@ public class MyDeque<E>{
     return size;
   }
 
+  //Prints out deck :3
   public String toString(){
     String result = "{ ";
     for (E i: data){
@@ -34,10 +36,16 @@ public class MyDeque<E>{
     return result += " }";
   }
 
-  public void addFirst(E element){
-
+  //"Inserts the specified element at the front of this deque if it is possible to do so immediately without violating capacity restrictions."
+  //Stack method?
+  public void addFirst(E element) throws NullPointerException {
+    data[0] = element;
+    for (int i = 1; i < data.length-1; i++){
+      data[i + 1] = data[i];
+    }
   }
-  public void addLast(E element){ }
+
+  public void addLast(E element) throws NullPointerException { }
   // public E removeFirst(){ }
   // public E removeLast(){ }
   // public E getFirst(){ }
@@ -46,6 +54,8 @@ public class MyDeque<E>{
   public static void main(String[] args) {
     MyDeque test;
     test = new MyDeque(10);
+    test.addFirst(1);
+    test.addFirst(2);
 
     System.out.println(test.size());
     System.out.println(test.toString());
