@@ -125,24 +125,24 @@ public class Driver {
 
 		// removing from end without wrap
 
-		// for (int i = 0; i < 1000; i++) {
-		// 	String old = gist_string(deque);
-		// 	try {
-		// 		deque.removeLast();
-		// 		comp.removeLast();
-		// 		if (!edge_check(comp, deque)) {
-		// 			out.add(message(old+".removeLast()", gist_string(comp), gist_string(deque)));
-		// 			break;
-		// 		}
-		// 		if (comp.size() != deque.size()) {
-		// 			out.add(message(old+".removeLast()\n"+gist_string(deque)+".size()", comp.size(), deque.size()));
-		// 			break;
-		// 		}
-		// 	} catch (Exception e) {
-		// 		out.add(message(old+".removeLast()", gist_string(comp), e.toString()));
-		// 		break;
-		// 	}
-		// }
+		for (int i = 0; i < 1000; i++) {
+			String old = gist_string(deque);
+			try {
+				deque.removeLast();
+				comp.removeLast();
+				if (!edge_check(comp, deque)) {
+					out.add(message(old+".removeLast()", gist_string(comp), gist_string(deque)));
+					break;
+				}
+				if (comp.size() != deque.size()) {
+					out.add(message(old+".removeLast()\n"+gist_string(deque)+".size()", comp.size(), deque.size()));
+					break;
+				}
+			} catch (Exception e) {
+				out.add(message(old+".removeLast()", gist_string(comp), e.toString()));
+				break;
+			}
+		}
 
 		// adding backward past capacity
     //

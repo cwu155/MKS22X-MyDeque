@@ -1,3 +1,5 @@
+import java.util.*;
+
 public class MyDeque<E>{
   private E[] data;
   public static int size, start, end;
@@ -28,6 +30,7 @@ public class MyDeque<E>{
 
   //Prints out deck :3
   public String toString(){
+    if (size() == 0){ return "{}"; }
     String result = "{";
     for (int i = 0; i < data.length; i++){
       if (i == data.length-1){
@@ -40,6 +43,14 @@ public class MyDeque<E>{
     return result += "}";
   }
 
+  public E getFirst(){
+    return data[start];
+  }
+
+  public E getLast(){
+    return data[end-1];
+  }
+
   //Too lazy to put this code in all the add/remove methods -_-
   public void resize(){
     @SuppressWarnings("unchecked")
@@ -49,7 +60,10 @@ public class MyDeque<E>{
         copy[i] = data[j];
         j++;
       }
+    start = (copy.length - size) / 2;
+    end = (copy.length - size) / 2 + (size - 1);
     data = copy;
+
   }
 
   //"Inserts the specified element at the front of this deque if it is possible to do so immediately without violating capacity restrictions."
@@ -77,29 +91,36 @@ public class MyDeque<E>{
     } else {
       data[end] = element;
     }
-    end += 1;
-    size += 1;
+      end += 1;
+      size += 1;
   }
   // public E removeFirst(){ }
-  // public E removeLast(){ }
 
-  public E getFirst(){
-    return data[start];
-  }
+  public E removeLast(){
+    if (size() == 0) { throw new NoSuchElementException();}
+    if (size() == 1) {
+      size = 0;
+      return data[start];
+    }
 
-  public E getLast(){
-    return data[end-1];
-  }
+    E toRemove = getLast();
+    data[end-1] = null;
+    end -= 1;
+    size -= 1;
+    return toRemove;
+}
 
   public static void main(String[] args) {
     MyDeque test;
     test = new MyDeque(10);
-    for (int i = 0; i < 12; i++){
+    for (int i = 0; i < 10; i++){
       test.addLast(i);
     }
+
     System.out.println("End index: " + end);
     System.out.println("Last element: " + test.getLast());
     System.out.println("Size: " + test.size());
-    System.out.println(test.toString());
+    System.out.println(test);
+
   }
 }
