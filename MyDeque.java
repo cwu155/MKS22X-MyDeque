@@ -60,9 +60,10 @@ public class MyDeque<E>{
         copy[i] = data[j];
         j++;
       }
-    start = (copy.length - size) / 2;
-    end = (copy.length - size) / 2 + (size - 1);
+
     data = copy;
+    start = 0;
+    end = size() - 1;
 
   }
 
@@ -70,22 +71,28 @@ public class MyDeque<E>{
   //Stack method?
   public void addFirst(E element){
     if (element == null){ throw new NullPointerException(); }
-    if (data[start-1] != null){
-      resize();
-    }
-    data[start - 1] = element;
-    start -= 1;
 
-    size += 1;
-    data[0] = element;
-    for (int i = 1; i < data.length-1; i++){
-      data[i + 1] = data[i];
+    if (size >= data.length){
+      resize();
+
     }
+
+    if (start == 0){
+      data[start] = element;
+      start = data.length-1;
+      size += 1;
+    } else {
+      start -= 1;
+      data[start] = element;
+      size += 1;
+    }
+
+    data[start] = element;
   }
 
   public void addLast(E element){
     if (element == null){ throw new NullPointerException(); }
-    if (data[data.length-1] != null){
+    if (data[data.length-1] != null || size == data.length){
       resize();
       data[end] = element;
     } else {
@@ -113,12 +120,12 @@ public class MyDeque<E>{
   public static void main(String[] args) {
     MyDeque test;
     test = new MyDeque(10);
-    for (int i = 0; i < 10; i++){
-      test.addLast(i);
+    for (int i = 0; i < 13; i++){
+      test.addFirst(i); System.out.println("Current start: " + start + ", " + i);
     }
 
-    System.out.println("End index: " + end);
-    System.out.println("Last element: " + test.getLast());
+    //System.out.println("End index: " + end);
+    //System.out.println("Last element: " + test.getLast());
     System.out.println("Size: " + test.size());
     System.out.println(test);
 
