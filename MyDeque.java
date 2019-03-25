@@ -52,7 +52,21 @@ public class MyDeque<E>{
   }
 
   //Too lazy to put this code in all the add/remove methods -_-
-  public void resize(){
+  public void resizeStart(){
+    @SuppressWarnings("unchecked")
+    E[] copy = (E[])new Object[(size() * 2) + 1];
+    int j = 0;
+      for (int i = size(); i > 0; i--){
+        copy[j] = data[i];
+        j++;
+      }
+
+    data = copy;
+    start = 0;
+    end = size() - 1;
+  }
+
+  public void resizeEnd(){
     @SuppressWarnings("unchecked")
     E[] copy = (E[])new Object[(size() * 2) + 1];
     int j = 0;
@@ -62,9 +76,6 @@ public class MyDeque<E>{
       }
 
     data = copy;
-    start = 0;
-    end = size() - 1;
-
   }
 
   //"Inserts the specified element at the front of this deque if it is possible to do so immediately without violating capacity restrictions."
@@ -73,27 +84,25 @@ public class MyDeque<E>{
     if (element == null){ throw new NullPointerException(); }
 
     if (size >= data.length){
-      resize();
-
+      resizeStart();
     }
 
     if (start == 0){
-      data[start] = element;
       start = data.length-1;
+      data[start] = element;
       size += 1;
     } else {
       start -= 1;
       data[start] = element;
       size += 1;
     }
-
     data[start] = element;
   }
 
   public void addLast(E element){
     if (element == null){ throw new NullPointerException(); }
     if (data[data.length-1] != null || size == data.length){
-      resize();
+      resizeEnd();
       data[end] = element;
     } else {
       data[end] = element;
@@ -101,7 +110,20 @@ public class MyDeque<E>{
       end += 1;
       size += 1;
   }
-  // public E removeFirst(){ }
+
+  public E removeFirst(){
+    if (size() == 0) { throw new NoSuchElementException();}
+    if (size() == 1) {
+      size = 0;
+      return data[start];
+    }
+
+    E toRemove = getFirst();
+    data[start] = null;
+    start += 1;
+    size -= 1;
+    return toRemove;
+  }
 
   public E removeLast(){
     if (size() == 0) { throw new NoSuchElementException();}
@@ -120,9 +142,11 @@ public class MyDeque<E>{
   public static void main(String[] args) {
     MyDeque test;
     test = new MyDeque(10);
-    for (int i = 0; i < 13; i++){
-      test.addFirst(i); System.out.println("Current start: " + start + ", " + i);
+    for (int i = 0; i < 11; i++){
+      test.addLast(i); //System.out.println("Current start: " + start + ", " + i); //debug
     }
+    test.removeFirst();
+    test.addLast("hi");
 
     //System.out.println("End index: " + end);
     //System.out.println("Last element: " + test.getLast());
