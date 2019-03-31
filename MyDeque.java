@@ -57,7 +57,10 @@ public class MyDeque<E>{
 
   public E getLast(){
     if (size() <= 0){ throw new NoSuchElementException(); }
-    return data[data.length-1];
+    if (start >= end){
+      return data[data.length-1];
+    }
+    return data[end-1];
   }
 
   public void resize(){
@@ -153,7 +156,7 @@ public class MyDeque<E>{
 
   public static void main(String[] args) {
     MyDeque<Integer> test = new MyDeque<>();
-    for (int i = 0; i < 15; i++){
+    for (int i = 0; i < 20; i++){
       test.addFirst(i);
       //test.addLast(i);
     }
@@ -165,14 +168,15 @@ public class MyDeque<E>{
     System.out.println(test);
     System.out.println("---------------------------------------");
 
-    for (int i = 0; i < 6; i++){
-      test.removeFirst();
-      //test.removeLast();
-    }
+    // for (int i = 0; i < 6; i++){
+    //   test.removeFirst();
+    //   //test.removeLast();
+    // }
 
     System.out.println("New Start: " + start);
     System.out.println("New End: " + end);
     System.out.println("New Size: " + test.size());
     System.out.println(test);
+    System.out.println(test.getFirst());
   }
 }
