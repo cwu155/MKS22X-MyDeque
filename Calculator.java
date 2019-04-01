@@ -34,16 +34,22 @@ public class Calculator{
       System.out.println(numbers);
 
       for (String element : tokens){
-        Double a = numbers.removeFirst();
-        Double b = numbers.removeFirst();
+        Double a = numbers.removeLast();
+        Double b = numbers.removeLast();
 
         if (element.equals("+")){
+          System.out.println(a);
+          System.out.println(b);
             numbers.addFirst(a + b);
           }
-       if (element.equals("-")){
+        if (element.equals("-")){
+          System.out.println(a);
+          System.out.println(b);
             numbers.addFirst(a - b);
           }
         if (element.equals("*")){
+          System.out.println(a);
+          System.out.println(b);
             numbers.addFirst(a * b);
           }
         // if (element.equals("/")){
@@ -56,8 +62,6 @@ public class Calculator{
      }
 
     public static void main(String[] args) {
-      System.out.println(eval("10 4.0 -"));
-      System.out.println(eval("11 3 - 4 + 2.5 *"));
-      System.out.println(eval("8 2 + 99 9 - * 2 + 9 -"));;
+      System.out.println(eval("4 5 6 * +"));
     }
 }
