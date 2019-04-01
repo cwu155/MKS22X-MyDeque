@@ -17,51 +17,43 @@ public class Calculator{
 
     public static double eval(String s){
 
-      ArrayList<String> tokens = new ArrayList<String>();
-      MyDeque<Double> numbers = new MyDeque<Double>(10);
+    MyDeque<Double> numbers = new MyDeque<Double>();
+    String tokens = "";
 
-      Scanner tokenize = new Scanner(s);
-      while (tokenize.hasNext()) {
-          String toAdd = tokenize.next();
+    for(int i = 0; i < s.length(); i++){
+      if (Character.isDigit(s.charAt(i)) || s.charAt(i)=='.' ||
+        (s.charAt(i)=='-' && i+1<s.length() && Character.isDigit(s.charAt(i+1)))){
+        tokens += s.charAt(i);
+      } else if (s.charAt(i) != ' ') {
 
-          if (isNumber(toAdd)){
-            numbers.addLast(Double.parseDouble(toAdd));
-          } else {
-            tokens.add(toAdd);
-          }
-      }
-      System.out.println(tokens);
-      System.out.println(numbers);
+        Double a = numbers.removeFirst();
+        Double b = numbers.removeFirst();
 
-      for (String element : tokens){
-        Double a = numbers.removeLast();
-        Double b = numbers.removeLast();
-
-        if (element.equals("+")){
-          System.out.println(a);
-          System.out.println(b);
-            numbers.addFirst(a + b);
-          }
-        if (element.equals("-")){
-          System.out.println(a);
-          System.out.println(b);
-            numbers.addFirst(a - b);
-          }
-        if (element.equals("*")){
-          System.out.println(a);
-          System.out.println(b);
-            numbers.addFirst(a * b);
-          }
-        // if (element.equals("/")){
-        //     Double divisor = numbers.removeFirst();
-        //     numbers.addFirst(numbers.removeFirst() / divisor);
-        //   }
+        if(s.charAt(i) == '+'){
+          numbers.addFirst(a+b);
+        } else if(s.charAt(i) == '-'){
+          numbers.addFirst(b-a);
+        } else if(s.charAt(i) == '*'){
+          numbers.addFirst(a*b);
+        } else if(s.charAt(i) == '/'){
+          numbers.addFirst(b/a);
+        } else if(s.charAt(i) == '%'){
+          numbers.addFirst(b%a);
         }
-
-       return numbers.removeFirst();
-     }
+        i++;
+      } else{
+        numbers.addFirst(Double.parseDouble(tokens));
+        tokens = "";
+      }
+    }
+    return numbers.removeFirst();
+  }
 
     public static void main(String[] args) {
       System.out.println(eval("4 5 6 * +"));
+      System.out.println(eval("11 3 - 4 + 2.5 *"));
+      System.out.println(eval("1 2 3 4 5 + * - -"));
+      System.out.println(eval("10 2.0 +"));
+      System.out.println(eval("8 2 + 99 9 - * 2 + 9 -"));
     }
 }

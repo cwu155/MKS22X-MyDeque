@@ -24,12 +24,13 @@ public class MyDeque<E>{
     if (size == 0){ return "{}";}
     String result = "{";
 
+    //debug
     // for (int i = 0; i < data.length; i++){
     //   //if (data[i] != null){
     //   result += data[i] + " ";
     //   //}
     // }
-    
+
     //addFirst
     if (start >= end){
       for (int i = start; i < size + start; i++){
@@ -181,20 +182,24 @@ public E getFirst(){
 
 public E getLast(){
   if (size() <= 0){ throw new NoSuchElementException(); }
-  return data[size + start -1];
+  return data[size - 1];
 }
 
   public static void main(String[] args) {
     MyDeque<Integer> test = new MyDeque<>(5);
     for (int i = 0; i < 10; i++){
-      //test.addFirst(i);
-      test.addLast(i);
+      test.addFirst(i);
+      //test.addLast(i);
       System.out.println("Size: " + size + " Start: " + start + " End: " + end);
     }
     for (int i = -1; i > -10; i--){
       test.addFirst(i);
       //test.addLast(i);
     }
+
+    // test.removeFirst();
+    // test.removeFirst();
+    // test.removeLast();
 
     System.out.println("Start: " + start);
     System.out.println("End: " + end);
